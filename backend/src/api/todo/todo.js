@@ -1,8 +1,8 @@
 const restful = require('node-restful');
-const moongose = restful.moongose;
+const mongoose = restful.mongoose;
 
 
-const todoSchema = new moongose.Schema({
+const todoSchema = new mongoose.Schema({
     description: { type: String, required: true, },
     done: { type: Boolean, required: true, default: false },
     createdAt: { type: Date, default: Date.now }
