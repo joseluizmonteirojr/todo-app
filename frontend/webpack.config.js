@@ -6,32 +6,35 @@ module.exports = {
     entry: path.join(__dirname, 'src', 'index.jsx'),
     output: {
         path: path.join(__dirname, 'public'),
-        filename: path.normalize('app.js')
+        filename: 'app.js'
     },
     devServer: {
         port: 8080,
-        contentBase: path.normalize('public')
+        contentBase: path.resolve('public')
     },
     resolve: {
-        extensions: ['.js', '.jsx'],
-        alias: {
-            modules: path.join(__dirname, 'node_modules')
-        }
+        extensions: ['.js', '.jsx']
     },
     plugins: [
-        new ExtractTextPlugin('app.css')
+        new ExtractTextPlugin({
+            filename: 'app.css'
+        })
     ],
     module: {
         rules: [{
             test: /.js[x]?$/,
-            use: 'babel-loader',
+            loader: 'babel-loader',
             exclude: /node_modules/
         }, {
             test: /\.css$/,
-            use: ExtractTextPlugin.extract('style-loader', 'css-loader')
+            use: ExtractTextPlugin.extract({
+                fallback: "style-loader",
+                use: "css-loader",
+                publicPath: "/public"
+            })
         }, {
             test: /\.woff|.woff2|.ttf|.eot|.svg*.*$/,
-            use: 'file'
+            loader: 'file-loader'
         }]
     }
 }
